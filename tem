@@ -751,6 +751,25 @@
                                     "Ref": "AAPFPackageFileName"
                                 },
                                 "/installer/config.yml\n",
+                                "# Enable HTTPS on webUI if required by user\n",
+                                "if [[ \"",
+                                {
+                                    "Ref": "EnableHTTPS"
+                                },
+                                "\" = true ]]; then ",
+                                "sed -i \"s/# ssl_certificate: \\/path\\/to\\/cert.pem/ssl_certificate: \\/etc\\/nginx\\/ssl\\/server.pem",
+                                "/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/config.yml ; ",
+                                "sed -i \"s/# ssl_certificate_key: \\/path\\/to\\/cert.key/ssl_certificate_key: \\/etc\\/nginx\\/ssl\\/server.key",
+                                "/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/config.yml ; ",
+                                "fi\n",
                                 "# Set passwordless ssh from management node to other nodes\n",
                                 "su - ec2-user -c \"ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''\"\n",
                                 "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys\"\n",
@@ -805,6 +824,76 @@
                                     "Ref": "AAPFPackageFileName"
                                 },
                                 "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y python-libs-2.7.5-58.el7.x86_64' -b\"\n",
+                                "#Enable version Lock",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y kernel-3.10.0-693.*' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y yum-plugin-versionlock' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add kernel-3.10.0-693.*' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install yum-plugin-versionlock' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add python-2.7.5-58.*' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add python-libs-2.7.5-58.*' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add python-devel-2.7.5-58.*' -b\"\n",
+                                "# hostname settings\n",
+                                "hostnamectl set-hostname --static Mang\n",
+                                "sed \"$ a preserve_hostname: true\" ",
+                                "/etc/cloud/cloud.cfg\n",
+                                "sed -i \"$ a $(curl http://169.254.169.254/latest/meta-data/local-ipv4)",
+                                " Mang\" ",
+                                "/etc/hosts\n",
+                                "sed -i \"$ a ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFstorageCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " Strg\" ", 
+                                "/etc/hosts\n",
+                                "sed -i \"$ a ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFcontCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " Cont\" ",
+                                "/etc/hosts\n",
+                                "sed -i \"$ a ",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFwebcf",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " Web\" ",
+                                "/etc/hosts\n",
                                 "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
                                 {
                                     "Ref": "AAPFPackageFileName"
@@ -917,7 +1006,23 @@
                                 "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
                                 "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
                                 "rm -f /home/ec2-user/pub_key\n",
-                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
+                                "mkdir -p /etc/nginx/ssl\n",
+                                "yum install -y openssl\n",
+                                "cd /etc/nginx/ssl\n",
+                                "sudo -s\n",
+                                "openssl genrsa -out server.key 2048\n",
+                                "openssl req -new -sha256 -key server.key -out server.csr -subj \"/CN=$(hostname -f)\"\n",
+                                "( echo \"keyUsage = critical, digitalSignature, keyEncipherment, keyAgreement\"\n",
+                                "echo \"extendedKeyUsage = serverAuth, clientAuth\"\n",
+                                "echo \"basicConstraints=critical, CA:FALSE\"\n",
+                                "echo \"subjectAltName = DNS:$(hostname),IP:127.0.0.1,IP:$(hostname -i)\"\n",
+                                ")  > extfile.cnf\n",
+                                "openssl x509 -req -days 3650 -sha256 -in server.csr -signkey server.key -extfile extfile.cnf -out server.pem\n",
+                                "# hostname settings\n",
+                                "hostnamectl set-hostname --static Web\n",
+                                "sed \"$ a preserve_hostname: true\" ",
+                                "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
                     }
@@ -1011,7 +1116,11 @@
                                 "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
                                 "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
                                 "rm -f /home/ec2-user/pub_key\n",
-                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
+                                "# hostname settings\n",
+                                "hostnamectl set-hostname --static Strg\n",
+                                "sed \"$ a preserve_hostname: true\" ",
+                                "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
                     }
@@ -1117,7 +1226,11 @@
                                 "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
                                 "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
                                 "rm -f /home/ec2-user/pub_key\n",
-                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
+                                "# hostname settings\n",
+                                "hostnamectl set-hostname --static Cont\n",
+                                "sed \"$ a preserve_hostname: true\" ",
+                                "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
                     }
@@ -1699,6 +1812,16 @@
             "Default": "40",
             "MinValue": "10",
             "MaxValue": "16384"
+        },
+        "EnableHTTPS": {
+            "Description": "Enable HTTPS on WebUI, once enabled cannot be changed.",
+            "Type": "String",
+            "Default": "false",
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "ConstraintDescription": "either true or false"
         }
     },
     "Mappings": {
