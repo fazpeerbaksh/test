@@ -1,0 +1,1772 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Interface": {
+            "ParameterGroups": [
+                {
+                    "Label": {
+                        "default": "AAPF Installer Configuration"
+                    },
+                    "Parameters": [
+                        "S3BucketName",
+                        "AAPFPackageFileName",
+                        "AAPFLicenseFileName"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Amazon EC2 Configuration"
+                    },
+                    "Parameters": [
+                        "ManagementNodeInstanceType",
+                        "ManagementNodeRootVolumeSize",
+                        "ManagementNodeAddOnVolumeSize",
+                        "ContainerNodeInstanceType",
+                        "ContainerNodeRootVolumeSize",
+                        "ContainerNodeAddOnVolumeSize",
+                        "StorageNodeInstanceType",
+                        "StorageNodeRootVolumeSize",
+                        "WebNodeInstanceType",
+                        "WebNodeRootVolumeSize",
+                        "KeyName"
+                    ]
+                }
+            ],
+            "ParameterLabels": {
+                "ManagementNodeInstanceType": {
+                    "default": "Management Node Instance Type"
+                },
+                "ManagementNodeRootVolumeSize": {
+                    "default": "Root Volume Size for Management Node"
+                },
+                "ManagementNodeAddOnVolumeSize": {
+                    "default": "AddOn Volume Size for Management Node"
+                },
+                "ContainerNodeInstanceType": {
+                    "default": "Container Node Instance Type"
+                },
+                "ContainerNodeRootVolumeSize": {
+                    "default": "Root Volume Size for Container Node"
+                },
+                "ContainerNodeAddOnVolumeSize": {
+                    "default": "AddOn Volume Size for Container Node"
+                },
+                "StorageNodeInstanceType": {
+                    "default": "Storage Node Instance Type"
+                },
+                "StorageNodeRootVolumeSize": {
+                    "default": "Root Volume Size for Storage Node"
+                },
+                "WebNodeInstanceType": {
+                    "default": "Web Node Instance Type"
+                },
+                "WebNodeRootVolumeSize": {
+                    "default": "Root Volume Size for Web Node"
+                },
+                "KeyName": {
+                    "default": "Key Name"
+                },
+                "S3BucketName": {
+                    "default": "S3 Bucket Name"
+                },
+                "AAPFPackageFileName": {
+                    "default": "AAPF Package File Name"
+                },
+                "AAPFLicenseFileName": {
+                    "default": "AAPF License File Name"
+                }
+            }
+        },
+        "AWS::CloudFormation::Designer": {
+            "c1efd5ca-7f89-444b-a546-11e0dae75594": {
+                "size": {
+                    "width": 140,
+                    "height": 140
+                },
+                "position": {
+                    "x": 310,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266": {
+                "size": {
+                    "width": 140,
+                    "height": 140
+                },
+                "position": {
+                    "x": 170,
+                    "y": 320
+                },
+                "z": 0,
+                "embeds": [],
+                "iscontainedinside": [
+                    "c1efd5ca-7f89-444b-a546-11e0dae75594"
+                ]
+            },
+            "83e773ed-5475-4279-91bf-9f61c61f9468": {
+                "size": {
+                    "width": 140,
+                    "height": 140
+                },
+                "position": {
+                    "x": -40,
+                    "y": 110
+                },
+                "z": 0,
+                "embeds": [],
+                "iscontainedinside": [
+                    "c1efd5ca-7f89-444b-a546-11e0dae75594"
+                ]
+            },
+            "b85e2587-24cf-4523-acd6-0f36c14f8d80": {
+                "source": {
+                    "id": "83e773ed-5475-4279-91bf-9f61c61f9468"
+                },
+                "target": {
+                    "id": "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                },
+                "z": 0
+            },
+            "0e375275-0154-4a1c-bbe2-b2364587e92a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 220,
+                    "y": -10
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "20494325-c355-4b08-8d1e-b6be8520d9ba": {
+                "source": {
+                    "id": "c1efd5ca-7f89-444b-a546-11e0dae75594"
+                },
+                "target": {
+                    "id": "0e375275-0154-4a1c-bbe2-b2364587e92a"
+                },
+                "z": 0
+            },
+            "d0a90a71-8088-4f17-b23a-be0874c2d266": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 10,
+                    "y": -10
+                },
+                "z": 0,
+                "embeds": [],
+                "iscontainedinside": [
+                    "83e773ed-5475-4279-91bf-9f61c61f9468"
+                ],
+                "dependson": [
+                    "0e375275-0154-4a1c-bbe2-b2364587e92a"
+                ]
+            },
+            "0eb393f0-a7b4-4c98-9390-30478ba1d0a3": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 530,
+                    "y": 10
+                },
+                "z": 0,
+                "embeds": [],
+                "iscontainedinside": [
+                    "c1efd5ca-7f89-444b-a546-11e0dae75594"
+                ]
+            },
+            "f78b363c-6dff-49e1-a9c3-95e9ae519e52": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 440,
+                    "y": -20
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "13c8958b-4b44-4942-b137-6412edcc7df4": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 530,
+                    "y": -70
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "f78b363c-6dff-49e1-a9c3-95e9ae519e52"
+                ]
+            },
+            "5600cd96-f799-4cbd-8224-b202c52e977b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 530,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                ],
+                "iscontainedinside": [
+                    "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                ]
+            },
+            "1cdce47d-0c80-4389-b504-2a73352b12ec": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 630,
+                    "y": 250
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                ],
+                "iscontainedinside": [
+                    "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                ],
+                "dependson": [
+                    "148514c1-5792-4c57-b700-0173115e2aba"
+                ]
+            },
+            "a4b31e66-d9ec-466e-8823-d479cc73ab6a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 730,
+                    "y": 290
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                ],
+                "iscontainedinside": [
+                    "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                ],
+                "dependson": [
+                    "148514c1-5792-4c57-b700-0173115e2aba"
+                ]
+            },
+            "5bdf7884-5ada-49dc-b672-48e919ec21de": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 830,
+                    "y": 330
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                ],
+                "iscontainedinside": [
+                    "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                ],
+                "dependson": [
+                    "148514c1-5792-4c57-b700-0173115e2aba"
+                ]
+            },
+            "148514c1-5792-4c57-b700-0173115e2aba": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 370,
+                    "y": 410
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                ],
+                "iscontainedinside": [
+                    "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                ]
+            },
+            "043e0af9-1238-461e-a56e-e7bde5627fcb": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 360,
+                    "y": -50
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "AAPFvpcCF": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true",
+                "InstanceTenancy": "default",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-vpc-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "c1efd5ca-7f89-444b-a546-11e0dae75594"
+                }
+            }
+        },
+        "AAPFsubnetCF": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "CidrBlock": "10.0.1.0/20",
+                "MapPublicIpOnLaunch": "true",
+                "VpcId": {
+                    "Ref": "AAPFvpcCF"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-subnet-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "8d521dfd-ebc3-4f3a-abaa-f9693f9fb266"
+                }
+            }
+        },
+        "EC2SRTA3TYNZ": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "AAPFroutetableCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b85e2587-24cf-4523-acd6-0f36c14f8d80"
+                }
+            }
+        },
+        "AAPFroutetableCF": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "AAPFvpcCF"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-routetable-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "83e773ed-5475-4279-91bf-9f61c61f9468"
+                }
+            }
+        },
+        "EC2VPCG3FLT3": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "AAPFvpcCF"
+                },
+                "InternetGatewayId": {
+                    "Ref": "AAPFigwCF"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "20494325-c355-4b08-8d1e-b6be8520d9ba"
+                }
+            }
+        },
+        "AAPFigwCF": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-igw-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0e375275-0154-4a1c-bbe2-b2364587e92a"
+                }
+            }
+        },
+        "AAPFrouteigwCF": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "AAPFigwCF"
+                },
+                "RouteTableId": {
+                    "Ref": "AAPFroutetableCF"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d0a90a71-8088-4f17-b23a-be0874c2d266"
+                }
+            },
+            "DependsOn": [
+                "AAPFigwCF"
+            ]
+        },
+        "AAPFsgCF": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupName": "AAPF-sg-cf",
+                "GroupDescription": "Security group for AAPF by CloudFormation",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "Description": "Allow all inbound traffic",
+                        "FromPort": "-1",
+                        "IpProtocol": "-1",
+                        "ToPort": "-1"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "Description": "Allow all outbound traffic",
+                        "FromPort": "-1",
+                        "IpProtocol": "-1",
+                        "ToPort": "-1"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-sg-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "AAPFvpcCF"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0eb393f0-a7b4-4c98-9390-30478ba1d0a3"
+                }
+            }
+        },
+        "AAPFinstanceprofileCF": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Roles": [
+                    {
+                        "Ref": "AAPFec2roleCF"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "13c8958b-4b44-4942-b137-6412edcc7df4"
+                }
+            }
+        },
+        "AAPFmanagementCF": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "AAPFinstanceprofileCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "AAPFsgCF"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": {
+                                "Ref": "ManagementNodeRootVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    },
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "Encrypted": "true",
+                            "VolumeSize": {
+                                "Ref": "ManagementNodeAddOnVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "DisableApiTermination": "false",
+                "EbsOptimized": "false",
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegion2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "InstanceInitiatedShutdownBehavior": "stop",
+                "InstanceType": {
+                    "Ref": "ManagementNodeInstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-ManagementNode-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "Tenancy": "default",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash\n",
+                                "easy_install pip\n",
+                                "pip install awscli\n",
+                                "# Install Ansible, python-netaddr and lvm2\n",
+                                "yum-config-manager --enable rhui-REGION-rhel-server-extras\n",
+                                "yum install -y ansible\n",
+                                "yum install python-netaddr -y\n",
+                                "yum install -y lvm2\n",
+                                "cd /home/ec2-user/\n",
+                                "mkdir AAPF/ ; cd AAPF/ \n",
+                                "# Download the package and license from s3 bucket defined by user\n",
+                                "aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                ".tar.gz .\n",
+                                "aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/",
+                                {
+                                    "Ref": "AAPFLicenseFileName"
+                                },
+                                ".tar .\n",
+                                "aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/",
+                                {
+                                    "Ref": "KeyName"
+                                },
+                                ".pem .\n",
+                                "chmod 400 ",
+                                {
+                                    "Ref": "KeyName"
+                                },
+                                ".pem\n",
+                                "aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/AAPFInternalKeyPair.pem /home/ec2-user/AAPF/AAPFInternalKeyPair.pem\n",
+                                "chown ec2-user:ec2-user /home/ec2-user/AAPF/AAPFInternalKeyPair.pem\n",
+                                "su - ec2-user -c \"chmod 400 /home/ec2-user/AAPF/AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPF/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
+                                "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
+                                "rm -f /home/ec2-user/pub_key\n",
+                                "# Extract the AAPF image\n",
+                                "tar -xzf ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                ".tar.gz\n",
+                                "mv ",
+                                {
+                                    "Ref": "AAPFLicenseFileName"
+                                },
+                                ".tar ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/\n",
+                                "chown -R ec2-user:ec2-user /home/ec2-user/AAPF/\n",
+                                "# Add Private hostnames of All nodes in hosts file\n",
+                                "sed -i \"s/\\[management_node\\]/\\[management_node\\]\\n$(curl http://169.254.169.254/latest/meta-data/local-ipv4)/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/hosts\n",
+                                "sed -i \"s/\\[storage_node\\]/\\[storage_node\\]\\n",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFstorageCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                "/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/hosts\n",
+                                "sed -i \"s/\\[container_node\\]/\\[container_node\\]\\n",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFcontCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                "/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/hosts\n",
+                                "sed -i \"s/\\[web_service_node\\]/\\[web_service_node\\]\\n",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFwebcf",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " main_node=yes/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/hosts\n",
+                                "# Add VPC CIDR block to 'nfs_server_host_or_network' in config.yml\n",
+                                "sed -i \"s/nfs_server_host_or_network:/nfs_server_host_or_network: 10.0.0.0\\/16",
+                                "/\" ",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer/config.yml\n",
+                                "# Set passwordless ssh from management node to other nodes\n",
+                                "su - ec2-user -c \"ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''\"\n",
+                                "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys\"\n",
+                                "su - ec2-user -c \"chown ec2-user:ec2-user ~/.ssh/authorized_keys\"\n",
+                                "su - ec2-user -c \"chmod 600 ~/.ssh/authorized_keys\"\n",
+                                "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no -i /home/ec2-user/AAPF/",
+                                "AAPFInternalKeyPair.pem ec2-user@$(curl http://169.254.169.254/latest/meta-data/local-ipv4) 'umask 077 && mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'\"\n",
+                                "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no -i /home/ec2-user/AAPF/",
+                                "AAPFInternalKeyPair.pem ec2-user@",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFstorageCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " 'umask 077 && mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'\"\n",
+                                "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no -i /home/ec2-user/AAPF/",
+                                "AAPFInternalKeyPair.pem ec2-user@",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFcontCF",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " 'umask 077 && mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'\"\n",
+                                "su - ec2-user -c \"cat ~/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no -i /home/ec2-user/AAPF/",
+                                "AAPFInternalKeyPair.pem ec2-user@",
+                                {
+                                    "Fn::GetAtt": [
+                                        "AAPFwebcf",
+                                        "PrivateIp"
+                                    ]
+                                },
+                                " 'umask 077 && mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y unzip' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y rsync' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum  install -y python-devel-2.7.5-58.el7.x86_64' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum install -y python-libs-2.7.5-58.el7.x86_64' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node -i hosts -a 'pvcreate /dev/xvdb' -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible management_node,container_node -i hosts -a 'vgcreate docker-vg /dev/xvdb' -b\"\n",
+                                "date\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible-playbook -i hosts -v aapf_cluster.yml\"\n",
+                                "date\n"
+                            ]
+                        ]
+                    }
+                },
+                "AdditionalInfo": "AAPF Management Node"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5600cd96-f799-4cbd-8224-b202c52e977b"
+                }
+            },
+            "DependsOn": [
+                "AAPFwebcf",
+                "AAPFstorageCF",
+                "AAPFcontCF"
+            ]
+        },
+        "AAPFwebcf": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "AAPFinstanceprofileCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "AAPFsgCF"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": {
+                                "Ref": "WebNodeRootVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "DisableApiTermination": "false",
+                "EbsOptimized": "false",
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegion2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "InstanceInitiatedShutdownBehavior": "stop",
+                "InstanceType": {
+                    "Ref": "WebNodeInstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-WebNode-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "Tenancy": "default",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash\n",
+                                "easy_install pip\n",
+                                "pip install awscli\n",
+                                "su - ec2-user -c \"aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/AAPFInternalKeyPair.pem /home/ec2-user/AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"chmod 400 AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
+                                "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
+                                "rm -f /home/ec2-user/pub_key\n",
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                            ]
+                        ]
+                    }
+                },
+                "AdditionalInfo": "AAPF Web Service Node"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "1cdce47d-0c80-4389-b504-2a73352b12ec"
+                }
+            },
+            "DependsOn": [
+                "AAPFhelperCF"
+            ]
+        },
+        "AAPFstorageCF": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "AAPFinstanceprofileCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "AAPFsgCF"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": {
+                                "Ref": "StorageNodeRootVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "DisableApiTermination": "false",
+                "EbsOptimized": "false",
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegion2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "InstanceInitiatedShutdownBehavior": "stop",
+                "InstanceType": {
+                    "Ref": "StorageNodeInstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-StorageNode-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "Tenancy": "default",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash\n",
+                                "easy_install pip\n",
+                                "pip install awscli\n",
+                                "su - ec2-user -c \"aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/AAPFInternalKeyPair.pem /home/ec2-user/AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"chmod 400 AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
+                                "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
+                                "rm -f /home/ec2-user/pub_key\n",
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                            ]
+                        ]
+                    }
+                },
+                "AdditionalInfo": "AAPF Storage Node"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a4b31e66-d9ec-466e-8823-d479cc73ab6a"
+                }
+            },
+            "DependsOn": [
+                "AAPFhelperCF"
+            ]
+        },
+        "AAPFcontCF": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "AAPFinstanceprofileCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "AAPFsgCF"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": {
+                                "Ref": "ContainerNodeRootVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    },
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "Encrypted": "true",
+                            "VolumeSize": {
+                                "Ref": "ContainerNodeAddOnVolumeSize"
+                            },
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "DisableApiTermination": "false",
+                "EbsOptimized": "false",
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegion2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "InstanceInitiatedShutdownBehavior": "stop",
+                "InstanceType": {
+                    "Ref": "ContainerNodeInstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-ContNode-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "Tenancy": "default",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash\n",
+                                "yum install -y lvm2\n",
+                                "easy_install pip\n",
+                                "pip install awscli\n",
+                                "su - ec2-user -c \"aws s3 cp s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/AAPFInternalKeyPair.pem /home/ec2-user/AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"chmod 400 AAPFInternalKeyPair.pem\"\n",
+                                "su - ec2-user -c \"ssh-keygen -y -f /home/ec2-user/AAPFInternalKeyPair.pem > /home/ec2-user/pub_key\"\n",
+                                "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
+                                "rm -f /home/ec2-user/pub_key\n",
+                                "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n"
+                            ]
+                        ]
+                    }
+                },
+                "AdditionalInfo": "AAPF Container Node"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5bdf7884-5ada-49dc-b672-48e919ec21de"
+                }
+            },
+            "DependsOn": [
+                "AAPFhelperCF"
+            ]
+        },
+        "AAPFhelperCF": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "AAPFinstanceprofileCF"
+                },
+                "SubnetId": {
+                    "Ref": "AAPFsubnetCF"
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "AAPFsgCF"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": "10",
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegion2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "InstanceInitiatedShutdownBehavior": "terminate",
+                "InstanceType": "t2.micro",
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "AAPF-HelperNode-cf_",
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "Tenancy": "default",
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash\n",
+                                "easy_install pip\n",
+                                "pip install awscli\n",
+                                "aws ec2 delete-key-pair --key-name AAPFInternalKeyPair --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "; aws ec2 create-key-pair --key-name AAPFInternalKeyPair --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                " | cut -d \"\\\"\" -f 4 | head -n2 | tail -1 > AAPFInternalKeyPair\n",
+                                "printf '%b\\n' \"$(cat AAPFInternalKeyPair)\" > AAPFInternalKeyPair.pem\n",
+                                "aws s3 cp AAPFInternalKeyPair.pem s3://",
+                                {
+                                    "Ref": "S3BucketName"
+                                },
+                                "/AAPFInternalKeyPair.pem\n",
+                                "shutdown"
+                            ]
+                        ]
+                    }
+                },
+                "AdditionalInfo": "AAPF Management Node"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "148514c1-5792-4c57-b700-0173115e2aba"
+                }
+            }
+        },
+        "AAPFec2roleCF": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "ec2.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+                    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "f78b363c-6dff-49e1-a9c3-95e9ae519e52"
+                }
+            }
+        },
+        "AAPFcfroleCF": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "cloudformation.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AdministratorAccess",
+                    "arn:aws:iam::aws:policy/IAMFullAccess"
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "043e0af9-1238-461e-a56e-e7bde5627fcb"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances.",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "AllowedPattern": ".+",
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+        },
+        "S3BucketName": {
+            "Description": "Name of an existing S3 Bucket which contains AAPF Image and License Key. Please include folder and subfolder name also, if any.",
+            "Type": "String",
+            "AllowedPattern": ".+",
+            "ConstraintDescription": "must be the name of an existing s3 bucket containing AAPF image and licence key"
+        },
+        "AAPFPackageFileName": {
+            "Description": "Name of AAPF Installation Package (excluding extention .tar.gz)",
+            "Type": "String",
+            "AllowedPattern": ".+",
+            "ConstraintDescription": "must be the full name of aapf image excluding file extention"
+        },
+        "AAPFLicenseFileName": {
+            "Description": "Name of Licence File for AAPF (excluding extention .tar)",
+            "Type": "String",
+            "AllowedPattern": ".+",
+            "ConstraintDescription": "must be the full name of licence file excluding file extention"
+        },
+        "ManagementNodeInstanceType": {
+            "Description": "Management Node EC2 instance type",
+            "Type": "String",
+            "Default": "m4.xlarge",
+            "AllowedValues": [
+                "t2.nano",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "t2.xlarge",
+                "t2.2xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge",
+                "x1.16xlarge",
+                "x1.32xlarge",
+                "x1e.xlarge",
+                "x1e.2xlarge",
+                "x1e.4xlarge",
+                "x1e.8xlarge",
+                "x1e.16xlarge",
+                "x1e.32xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "h1.2xlarge",
+                "h1.4xlarge",
+                "h1.8xlarge",
+                "h1.16xlarge",
+                "i3.large",
+                "i3.xlarge",
+                "i3.2xlarge",
+                "i3.4xlarge",
+                "i3.8xlarge",
+                "i3.16xlarge",
+                "i3.metal",
+                "f1.2xlarge",
+                "f1.16xlarge",
+                "g3.4xlarge",
+                "g3.8xlarge",
+                "g3.16xlarge",
+                "p2.xlarge",
+                "p2.8xlarge",
+                "p2.16xlarge",
+                "p3.2xlarge",
+                "p3.8xlarge",
+                "p3.16xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "ManagementNodeRootVolumeSize": {
+            "Description": "Root EBS Volume Size for Management Node in GiB",
+            "Type": "Number",
+            "Default": "40",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        },
+        "ManagementNodeAddOnVolumeSize": {
+            "Description": "AddOn EBS Volume Size for Management Node in GiB",
+            "Type": "Number",
+            "Default": "10",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        },
+        "ContainerNodeInstanceType": {
+            "Description": "Container Node EC2 instance type",
+            "Type": "String",
+            "Default": "m4.4xlarge",
+            "AllowedValues": [
+                "t2.nano",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "t2.xlarge",
+                "t2.2xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge",
+                "x1.16xlarge",
+                "x1.32xlarge",
+                "x1e.xlarge",
+                "x1e.2xlarge",
+                "x1e.4xlarge",
+                "x1e.8xlarge",
+                "x1e.16xlarge",
+                "x1e.32xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "h1.2xlarge",
+                "h1.4xlarge",
+                "h1.8xlarge",
+                "h1.16xlarge",
+                "i3.large",
+                "i3.xlarge",
+                "i3.2xlarge",
+                "i3.4xlarge",
+                "i3.8xlarge",
+                "i3.16xlarge",
+                "i3.metal",
+                "f1.2xlarge",
+                "f1.16xlarge",
+                "g3.4xlarge",
+                "g3.8xlarge",
+                "g3.16xlarge",
+                "p2.xlarge",
+                "p2.8xlarge",
+                "p2.16xlarge",
+                "p3.2xlarge",
+                "p3.8xlarge",
+                "p3.16xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "ContainerNodeRootVolumeSize": {
+            "Description": "Root EBS Volume Size for Container Node in GiB",
+            "Type": "Number",
+            "Default": "40",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        },
+        "ContainerNodeAddOnVolumeSize": {
+            "Description": "AddOn EBS Volume Size for Container Node in GiB",
+            "Type": "Number",
+            "Default": "10",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        },
+        "StorageNodeInstanceType": {
+            "Description": "Storage Node EC2 instance type",
+            "Type": "String",
+            "Default": "m4.large",
+            "AllowedValues": [
+                "t2.nano",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "t2.xlarge",
+                "t2.2xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge",
+                "x1.16xlarge",
+                "x1.32xlarge",
+                "x1e.xlarge",
+                "x1e.2xlarge",
+                "x1e.4xlarge",
+                "x1e.8xlarge",
+                "x1e.16xlarge",
+                "x1e.32xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "h1.2xlarge",
+                "h1.4xlarge",
+                "h1.8xlarge",
+                "h1.16xlarge",
+                "i3.large",
+                "i3.xlarge",
+                "i3.2xlarge",
+                "i3.4xlarge",
+                "i3.8xlarge",
+                "i3.16xlarge",
+                "i3.metal",
+                "f1.2xlarge",
+                "f1.16xlarge",
+                "g3.4xlarge",
+                "g3.8xlarge",
+                "g3.16xlarge",
+                "p2.xlarge",
+                "p2.8xlarge",
+                "p2.16xlarge",
+                "p3.2xlarge",
+                "p3.8xlarge",
+                "p3.16xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "StorageNodeRootVolumeSize": {
+            "Description": "Root EBS Volume Size for Storage Node in GiB",
+            "Type": "Number",
+            "Default": "40",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        },
+        "WebNodeInstanceType": {
+            "Description": "Web Node EC2 instance type",
+            "Type": "String",
+            "Default": "m4.large",
+            "AllowedValues": [
+                "t2.nano",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "t2.xlarge",
+                "t2.2xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge",
+                "x1.16xlarge",
+                "x1.32xlarge",
+                "x1e.xlarge",
+                "x1e.2xlarge",
+                "x1e.4xlarge",
+                "x1e.8xlarge",
+                "x1e.16xlarge",
+                "x1e.32xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "h1.2xlarge",
+                "h1.4xlarge",
+                "h1.8xlarge",
+                "h1.16xlarge",
+                "i3.large",
+                "i3.xlarge",
+                "i3.2xlarge",
+                "i3.4xlarge",
+                "i3.8xlarge",
+                "i3.16xlarge",
+                "i3.metal",
+                "f1.2xlarge",
+                "f1.16xlarge",
+                "g3.4xlarge",
+                "g3.8xlarge",
+                "g3.16xlarge",
+                "p2.xlarge",
+                "p2.8xlarge",
+                "p2.16xlarge",
+                "p3.2xlarge",
+                "p3.8xlarge",
+                "p3.16xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "WebNodeRootVolumeSize": {
+            "Description": "Root EBS Volume Size for Web Node in GiB",
+            "Type": "Number",
+            "Default": "40",
+            "MinValue": "10",
+            "MaxValue": "16384"
+        }
+    },
+    "Mappings": {
+        "AWSRegion2AMI": {
+            "us-east-1": {
+                "AMI": "ami-76a3970c"
+            },
+            "us-east-2": {
+                "AMI": "ami-cebe94ab"
+            },
+            "us-west-1": {
+                "AMI": "ami-c8020fa8"
+            },
+            "us-west-2": {
+                "AMI": "ami-1607ba6e"
+            },
+            "eu-west-1": {
+                "AMI": "ami-ccb7d2b5"
+            },
+            "eu-west-2": {
+                "AMI": "ami-b4b3a8d0"
+            },
+            "eu-west-3": {
+                "AMI": "ami-66d0661b"
+            },
+            "eu-central-1": {
+                "AMI": "ami-8a21bfe5"
+            },
+            "ap-northeast-1": {
+                "AMI": "ami-36f09350"
+            },
+            "ap-northeast-2": {
+                "AMI": "ami-90a201fe"
+            },
+            "ap-southeast-1": {
+                "AMI": "ami-8d90e9f1"
+            },
+            "ap-southeast-2": {
+                "AMI": "ami-e1996783"
+            },
+            "ap-south-1": {
+                "AMI": "ami-5c2f7e33"
+            },
+            "ca-central-1": {
+                "AMI": "ami-71018415"
+            },
+            "sa-east-1": {
+                "AMI": "ami-1a064a76"
+            }
+        }
+    },
+    "Outputs": {
+        "AAPFWebUI": {
+            "Description": "The URL of AAPF Web UI",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "http://",
+                        {
+                            "Fn::GetAtt": [
+                                "AAPFwebcf",
+                                "PublicDnsName"
+                            ]
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+}
