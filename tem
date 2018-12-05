@@ -859,11 +859,11 @@
                                 },
                                 "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add python-devel-2.7.5-58.*' -b\"\n",
                                 "# hostname settings\n",
-                                "hostnamectl set-hostname --static Mang\n",
+                                "hostnamectl set-hostname --static mang\n",
                                 "sed \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n",
                                 "sed -i \"$ a $(curl http://169.254.169.254/latest/meta-data/local-ipv4)",
-                                " Mang\" ",
+                                " mang\" ",
                                 "/etc/hosts\n",
                                 "sed -i \"$ a ",
                                 {
@@ -872,7 +872,7 @@
                                         "PrivateIp"
                                     ]
                                 },
-                                " Strg\" ",
+                                " strg\" ",
                                 "/etc/hosts\n",
                                 "sed -i \"$ a ",
                                 {
@@ -881,7 +881,7 @@
                                         "PrivateIp"
                                     ]
                                 },
-                                " Cont\" ",
+                                " con1\" ",
                                 "/etc/hosts\n",
                                 "sed -i \"$ a ",
                                 {
@@ -890,7 +890,7 @@
                                         "PrivateIp"
                                     ]
                                 },
-                                " Web\" ",
+                                " web\" ",
                                 "/etc/hosts\n",
                                 "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
                                 {
@@ -1005,20 +1005,27 @@
                                 "su - ec2-user -c 'echo \"$(cat /home/ec2-user/pub_key)\" \"AAPFInternalKeyPair\" >> ~/.ssh/authorized_keys'\n",
                                 "rm -f /home/ec2-user/pub_key\n",
                                 "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
-                                "mkdir -p /etc/nginx/ssl\n",
-                                "yum install -y openssl\n",
-                                "cd /etc/nginx/ssl\n",
-                                "sudo -s\n",
-                                "openssl genrsa -out server.key 2048\n",
-                                "openssl req -new -sha256 -key server.key -out server.csr -subj \"/CN=$(hostname -f)\"\n",
-                                "( echo \"keyUsage = critical, digitalSignature, keyEncipherment, keyAgreement\"\n",
-                                "echo \"extendedKeyUsage = serverAuth, clientAuth\"\n",
-                                "echo \"basicConstraints=critical, CA:FALSE\"\n",
-                                "echo \"subjectAltName = DNS:$(hostname),IP:127.0.0.1,IP:$(hostname -i)\"\n",
-                                ")  > extfile.cnf\n",
-                                "openssl x509 -req -days 3650 -sha256 -in server.csr -signkey server.key -extfile extfile.cnf -out server.pem\n",
+                                "# Generate self signed SSL certificate\n",
+                                "if [[ \"",
+                                {
+                                    "Ref": "EnableHTTPS"
+                                },
+                                "\" = \"enable\" ]]; then ",
+                                "mkdir -p /etc/nginx/ssl; ",
+                                "yum install -y openssl; ",
+                                "cd /etc/nginx/ssl; ",
+                                "sudo -s; ",
+                                "openssl genrsa -out server.key 2048; ",
+                                "openssl req -new -sha256 -key server.key -out server.csr -subj \"/CN=$(hostname -f)\"; ",
+                                "( echo \"keyUsage = critical, digitalSignature, keyEncipherment, keyAgreement\"; ",
+                                "echo \"extendedKeyUsage = serverAuth, clientAuth\"; ",
+                                "echo \"basicConstraints=critical, CA:FALSE\"; ",
+                                "echo \"subjectAltName = DNS:$(hostname),IP:127.0.0.1,IP:$(hostname -i)\"; ",
+                                ")  > extfile.cnf; ",
+                                "openssl x509 -req -days 3650 -sha256 -in server.csr -signkey server.key -extfile extfile.cnf -out server.pem; ",
+                                "fi\n",
                                 "# hostname settings\n",
-                                "hostnamectl set-hostname --static Web\n",
+                                "hostnamectl set-hostname --static web\n",
                                 "sed \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
@@ -1116,7 +1123,7 @@
                                 "rm -f /home/ec2-user/pub_key\n",
                                 "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
                                 "# hostname settings\n",
-                                "hostnamectl set-hostname --static Strg\n",
+                                "hostnamectl set-hostname --static strg\n",
                                 "sed \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
@@ -1226,7 +1233,7 @@
                                 "rm -f /home/ec2-user/pub_key\n",
                                 "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
                                 "# hostname settings\n",
-                                "hostnamectl set-hostname --static Cont\n",
+                                "hostnamectl set-hostname --static con1\n",
                                 "sed \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
