@@ -860,8 +860,12 @@
                                 "/installer; ansible management_node,container_node,storage_node,web_service_node -i hosts -a 'yum versionlock add python-devel-2.7.5-58.*' -b\"\n",
                                 "# hostname settings\n",
                                 "hostnamectl set-hostname --static mang\n",
-                                "sed \"$ a preserve_hostname: true\" ",
+                                "sed -i \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n",
+                                "# create DNS server on mang node \n",
+                                "yum install -y dnsmasq\n",
+                                "sed -i -e 's/#domain-needed/domain-needed/' -e 's/#bogus-priv/bogus-priv/' -e 's/#strict-order/strict-order/' ",
+                                "/etc/dnsmasq.conf\n",
                                 "sed -i \"$ a $(curl http://169.254.169.254/latest/meta-data/local-ipv4)",
                                 " mang\" ",
                                 "/etc/hosts\n",
@@ -892,6 +896,8 @@
                                 },
                                 " web\" ",
                                 "/etc/hosts\n",
+                                "systemctl start dnsmasq.service\n",
+                                "systemctl enable dnsmasq.service\n",
                                 "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
                                 {
                                     "Ref": "AAPFPackageFileName"
@@ -903,6 +909,27 @@
                                 },
                                 "/installer; ansible management_node,container_node -i hosts -a 'vgcreate docker-vg /dev/xvdb' -b\"\n",
                                 "date\n",
+                                "# permanently add management node IP as DNS \n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible container_node,storage_node,web_service_node -i hosts -a \\\"",
+                                "sed -i -e 's/nameserver.*/nameserver $(curl http://169.254.169.254/latest/meta-data/local-ipv4)/' ",
+                                "/etc/resolv.conf\\\" -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible container_node,storage_node,web_service_node -i hosts -a \\\"",
+                                "touch /etc/dhcp/dhclient.conf\\\" -b\"\n",
+                                "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
+                                {
+                                    "Ref": "AAPFPackageFileName"
+                                },
+                                "/installer; ansible container_node,storage_node,web_service_node -i hosts -m lineinfile -a \\\"",
+                                "dest=/etc/dhcp/dhclient.conf line='supersede domain-name-servers $(curl http://169.254.169.254/latest/meta-data/local-ipv4)'\\\" -b\"\n",
+                                "# install aapf platform\n",
                                 "su - ec2-user -c \"cd /home/ec2-user/AAPF/",
                                 {
                                     "Ref": "AAPFPackageFileName"
@@ -1026,7 +1053,7 @@
                                 "fi\n",
                                 "# hostname settings\n",
                                 "hostnamectl set-hostname --static web\n",
-                                "sed \"$ a preserve_hostname: true\" ",
+                                "sed -i \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
@@ -1124,7 +1151,7 @@
                                 "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
                                 "# hostname settings\n",
                                 "hostnamectl set-hostname --static strg\n",
-                                "sed \"$ a preserve_hostname: true\" ",
+                                "sed -i \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
@@ -1234,7 +1261,7 @@
                                 "rm -f /home/ec2-user/AAPFInternalKeyPair.pem\n",
                                 "# hostname settings\n",
                                 "hostnamectl set-hostname --static con1\n",
-                                "sed \"$ a preserve_hostname: true\" ",
+                                "sed -i \"$ a preserve_hostname: true\" ",
                                 "/etc/cloud/cloud.cfg\n"
                             ]
                         ]
